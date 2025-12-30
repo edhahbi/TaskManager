@@ -1,6 +1,7 @@
 using System.Collections;
 using System.CommandLine;
 using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json.Serialization;
 
 namespace TaskManager;
 
@@ -19,10 +20,13 @@ public class Task
     public DateTime _createdAt { get; set; }
     public DateTime _updatedAt { get; set; }
 
-    public Task(int id,string description){
+    public Task() { }
+    public Task(int id, string description, Status status, DateTime createdAt, DateTime updatedAt)
+    {
         _id = id;
-        _status = Status.todo;
         _description = description;
-        _createdAt = _updatedAt = DateTime.Now;
+        _status = status;
+        _createdAt = createdAt;
+        _updatedAt = updatedAt;
     }
 }

@@ -11,8 +11,4 @@
       <PackageReference Include="System.CommandLine" Version="2.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="utils\" />
-    </ItemGroup>
-
 </Project>

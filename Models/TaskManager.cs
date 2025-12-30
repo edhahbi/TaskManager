@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace TaskManager
 {
     public enum ReturnStatus
@@ -7,15 +9,26 @@ namespace TaskManager
         Illegal = 2,
     }
 
-    public class TaskManager
+    public static class TaskManager
     {
+        private static string _filePath = "db.json";
         private static List<Task> _listTasks = new List<Task>();
-        private static int _id;
 
+        public static void SaveJson()
+        {
+            var json = JsonSerializer.Serialize(_listTasks);
+            File.WriteAllText(_filePath,json);
+        }   
+        
+        public static void LoadJson()
+        {
+            var json = File.ReadAllText(_filePath);
+            _listTasks = JsonSerializer.Deserialize<List<Task>>(json) ?? new List<Task>();
+        }
+        
         public static void Create(String description)
         {
-            var task = new Task(_id,description);
-            _id++;
+            var task = new Task(_listTasks.Count,description,Status.todo,DateTime.Now,DateTime.Now);
             _listTasks.Add(task);
         }
 
@@ -84,7 +97,7 @@ namespace TaskManager
         {
             foreach (var task in _listTasks)
             {
-                Console.WriteLine($"{task._id}:{task._description},{task._status}");
+                Console.WriteLine(JsonSerializer.Serialize<Task>(task));
             }
         }
     }
